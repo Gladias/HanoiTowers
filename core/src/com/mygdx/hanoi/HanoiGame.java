@@ -19,9 +19,9 @@ public class HanoiGame extends ApplicationAdapter {
 	private Texture block2;
 	private Texture block3;
 	
-	private GameObject disc1;
-	private GameObject disc2;
-	private GameObject disc3;
+	public GameObject disc1;
+	public GameObject disc2;
+	public GameObject disc3;
 
 	
 	public void create() {
@@ -41,14 +41,17 @@ public class HanoiGame extends ApplicationAdapter {
 		disc2= new GameObject(block2);
 		disc3= new GameObject(block3);
 		
-		disc1.x=92;
-		disc1.y=19;
+		disc1.x=152;
+		disc1.y=105;
+		disc1.id=1;
 		
-		disc2.x=118;
-		disc2.y=27;
+		disc2.x=140;         // <- start values
+		disc2.y=80;
+		disc2.id=2;
 		
-		disc3.x=138;
-		disc3.y=37;
+		disc3.x=130;
+		disc3.y=45;
+		disc3.id=3;
 	}
 
 	
@@ -58,9 +61,20 @@ public class HanoiGame extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(background,0,0);
 		font.draw(batch, GAME_NAME, 280,440);
-		batch.draw(block1,100,0);
-		batch.draw(block2,200,0);
-		batch.draw(block3,300,0);
+		
+		if (disc1.y > disc2.y && disc1.y > disc3.y)
+			disc1.y=ObjectMove.Click(disc1.x,disc1.y,disc1.id);
+		
+		else if (disc2.y > disc1.y && disc2.y > disc3.y)
+			disc2.y=ObjectMove.Click(disc2.x,disc2.y,disc2.id);
+		
+		else
+			disc3.y=ObjectMove.Click(disc3.x,disc3.y,disc3.id);
+		
+		batch.draw(block1,disc1.x,disc1.y);
+		batch.draw(block2,disc2.x,disc2.y);
+		batch.draw(block3,disc3.x,disc3.y); 
+		
 		batch.end();
 	}
 
